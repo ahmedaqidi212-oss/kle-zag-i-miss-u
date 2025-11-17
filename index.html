@@ -155,6 +155,13 @@
     for (let i = 0; i < 35; i++) {
         let petal = document.createElement("div");
         petal.className = "petal";
+        petal.style.left = Math.random() * 100 + "vw";
+        petal.style.animationDuration = 4 + Math.random() * 4 + "s";
+        document.body.appendChild(petal);
+    }
+</script>
 
+</body>
+</html>
 
 
