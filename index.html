@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>kle zag</title>
+<title>for you</title>
 
 <style>
     body {
@@ -16,18 +16,17 @@
     .container {
         max-width: 500px;
         margin: auto;
-        padding-top: 80px;
+        padding-top: 70px;
         text-align: center;
     }
 
-    h1 {
-        font-size: 38px;
+    h2 {
+        font-size: 30px;
         font-weight: 600;
         color: #cc0055;
-        margin-bottom: 40px;
+        margin-bottom: 30px;
     }
 
-    /* Buttons */
     .btn {
         padding: 12px 30px;
         font-size: 20px;
@@ -38,19 +37,18 @@
         transition: 0.2s;
     }
 
-    #yesBtn {
+    #yesBtn1, #yesBtn2 {
         background: #ff99c8;
     }
 
-    #noBtn {
+    #noBtn1 {
         background: #ffccd5;
         position: relative;
     }
 
-    /* Funny message */
-    #message {
-        margin-top: 30px;
-        font-size: 24px;
+    #msg1, #msg2, #finalMsg {
+        margin-top: 25px;
+        font-size: 22px;
         color: #b30047;
         opacity: 0;
         transition: 0.5s;
@@ -78,45 +76,85 @@
 <body>
 
 <div class="container">
-    <h1>kle zag, i miss u</h1>
 
-    <h2 style="color:#cc0055;">do u miss me?</h2>
-    <button id="yesBtn" class="btn">yes</button>
-    <button id="noBtn" class="btn">no</button>
+    <!-- intro -->
+    <h2 id="intro">i made this for u</h2>
 
-    <div id="message"></div>
+    <!-- question 1 -->
+    <div id="q1">
+        <h2>do u miss me?</h2>
+        <button id="yesBtn1" class="btn">yes</button>
+        <button id="noBtn1" class="btn">no</button>
+        <div id="msg1"></div>
+    </div>
+
+    <!-- question 2 (hidden at first) -->
+    <div id="q2" style="display:none;">
+        <h2>ok then, do u think about me?</h2>
+        <button id="yesBtn2" class="btn">yes</button>
+        <button id="fakeBtn" class="btn" style="background:#ffccd5;">sometimes</button>
+        <div id="msg2"></div>
+    </div>
+
+    <!-- final message -->
+    <div id="finalMsg"></div>
 
 </div>
 
 <script>
-    const yesBtn = document.getElementById("yesBtn");
-    const noBtn = document.getElementById("noBtn");
-    const msg = document.getElementById("message");
+    const yes1 = document.getElementById("yesBtn1");
+    const no1 = document.getElementById("noBtn1");
+    const msg1 = document.getElementById("msg1");
 
-    // Yes button response
-    yesBtn.onclick = () => {
-        msg.innerHTML = "i knew it.";
-        msg.style.opacity = 1;
+    const q1 = document.getElementById("q1");
+    const q2 = document.getElementById("q2");
+
+    const yes2 = document.getElementById("yesBtn2");
+    const fakeBtn = document.getElementById("fakeBtn");
+    const msg2 = document.getElementById("msg2");
+
+    const finalMsg = document.getElementById("finalMsg");
+
+    // YES to first question
+    yes1.onclick = () => {
+        msg1.innerHTML = "i knew it.";
+        msg1.style.opacity = 1;
+
+        setTimeout(() => {
+            q1.style.display = "none";
+            q2.style.display = "block";
+        }, 1200);
     };
 
-    // Make the NO button run away
-    noBtn.onmouseover = function() {
+    // NO button runs away
+    no1.onmouseover = function() {
         const x = Math.random() * 300 - 150;
         const y = Math.random() * 200 - 100;
-        noBtn.style.transform = `translate(${x}px, ${y}px)`;
+        no1.style.transform = `translate(${x}px, ${y}px)`;
     };
 
-    // Petals
+    // YES to second question
+    yes2.onclick = () => {
+        msg2.innerHTML = "good.";
+        msg2.style.opacity = 1;
+
+        setTimeout(() => {
+            q2.style.display = "none";
+            finalMsg.innerHTML = "thank you for being in my life.";
+            finalMsg.style.opacity = 1;
+        }, 1200);
+    };
+
+    // fake button (funny)
+    fakeBtn.onclick = () => {
+        msg2.innerHTML = "be serious.";
+        msg2.style.opacity = 1;
+    };
+
+    // petals
     for (let i = 0; i < 35; i++) {
         let petal = document.createElement("div");
         petal.className = "petal";
-        petal.style.left = Math.random() * 100 + "vw";
-        petal.style.animationDuration = 4 + Math.random() * 4 + "s";
-        document.body.appendChild(petal);
-    }
-</script>
 
-</body>
-</html>
 
 
