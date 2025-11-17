@@ -77,9 +77,6 @@
 
 <div class="container">
 
-    <!-- intro -->
-    <h2 id="intro">i made this for u</h2>
-
     <!-- question 1 -->
     <div id="q1">
         <h2>do u miss me?</h2>
@@ -88,11 +85,11 @@
         <div id="msg1"></div>
     </div>
 
-    <!-- question 2 (hidden at first) -->
+    <!-- question 2 -->
     <div id="q2" style="display:none;">
-        <h2>ok then, do u think about me?</h2>
+        <h2>do u think about me?</h2>
         <button id="yesBtn2" class="btn">yes</button>
-        <button id="fakeBtn" class="btn" style="background:#ffccd5;">sometimes</button>
+        <button id="maybeBtn" class="btn" style="background:#ffccd5;">sometimes</button>
         <div id="msg2"></div>
     </div>
 
@@ -110,12 +107,12 @@
     const q2 = document.getElementById("q2");
 
     const yes2 = document.getElementById("yesBtn2");
-    const fakeBtn = document.getElementById("fakeBtn");
+    const maybeBtn = document.getElementById("maybeBtn");
     const msg2 = document.getElementById("msg2");
 
     const finalMsg = document.getElementById("finalMsg");
 
-    // YES to first question
+    // YES first question
     yes1.onclick = () => {
         msg1.innerHTML = "i knew it.";
         msg1.style.opacity = 1;
@@ -126,14 +123,17 @@
         }, 1200);
     };
 
-    // NO button runs away
-    no1.onmouseover = function() {
-        const x = Math.random() * 300 - 150;
+    // NO button runaway for laptop & phone
+    function moveNoButton() {
+        const x = Math.random() * 260 - 130;
         const y = Math.random() * 200 - 100;
         no1.style.transform = `translate(${x}px, ${y}px)`;
-    };
+    }
 
-    // YES to second question
+    no1.onmouseover = moveNoButton;     // laptop
+    no1.ontouchstart = moveNoButton;    // phone
+
+    // YES second question
     yes2.onclick = () => {
         msg2.innerHTML = "good.";
         msg2.style.opacity = 1;
@@ -145,8 +145,8 @@
         }, 1200);
     };
 
-    // fake button (funny)
-    fakeBtn.onclick = () => {
+    // "sometimes" button
+    maybeBtn.onclick = () => {
         msg2.innerHTML = "be serious.";
         msg2.style.opacity = 1;
     };
