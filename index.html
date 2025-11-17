@@ -173,6 +173,23 @@
         <div id="msg6" class="msg"></div>
     </div>
 
+    <!-- Q7 -->
+    <div id="q7" style="display:none;">
+        <h2>rate me out of 10</h2>
+        <button id="r10" class="btn btn-main">10</button>
+        <button id="r9" class="btn btn-soft">9</button>
+        <button id="r8" class="btn btn-soft">8</button>
+        <div id="msg7" class="msg"></div>
+    </div>
+
+    <!-- Q8 -->
+    <div id="q8" style="display:none;">
+        <h2>final question: save me first or your phone?</h2>
+        <button id="saveMe" class="btn btn-main">u</button>
+        <button id="savePhone" class="btn btn-soft">my phone</button>
+        <div id="msg8" class="msg"></div>
+    </div>
+
 </div>
 
 <!-- Fake error screen -->
@@ -197,46 +214,6 @@
 </div>
 
 <script>
-    // elements
-    const q1 = document.getElementById("q1");
-    const q2 = document.getElementById("q2");
-    const q3 = document.getElementById("q3");
-    const q4 = document.getElementById("q4");
-    const q5 = document.getElementById("q5");
-    const q6 = document.getElementById("q6");
-
-    const yes1 = document.getElementById("yes1");
-    const no1 = document.getElementById("no1");
-    const msg1 = document.getElementById("msg1");
-
-    const yes2 = document.getElementById("yes2");
-    const no2 = document.getElementById("no2");
-    const msg2 = document.getElementById("msg2");
-
-    const meBtn = document.getElementById("meBtn");
-    const foodBtn = document.getElementById("foodBtn");
-    const msg3 = document.getElementById("msg3");
-
-    const yes4 = document.getElementById("yes4");
-    const no4 = document.getElementById("no4");
-    const msg4 = document.getElementById("msg4");
-
-    const yes5 = document.getElementById("yes5");
-    const idk5 = document.getElementById("idk5");
-    const msg5 = document.getElementById("msg5");
-
-    const yes6 = document.getElementById("yes6");
-    const no6 = document.getElementById("no6");
-    const msg6 = document.getElementById("msg6");
-
-    const errorScreen = document.getElementById("errorScreen");
-    const loadingScreen = document.getElementById("loadingScreen");
-    const finalSweet = document.getElementById("finalSweet");
-
-    const loadingBarInner = document.getElementById("loadingBarInner");
-    const loadingText = document.getElementById("loadingText");
-
-    // helper to move yes/no between questions
     function go(next) {
         q1.style.display = "none";
         q2.style.display = "none";
@@ -244,11 +221,12 @@
         q4.style.display = "none";
         q5.style.display = "none";
         q6.style.display = "none";
+        q7.style.display = "none";
+        q8.style.display = "none";
         next.style.display = "block";
     }
 
-    // runaway button for mouse and touch
-    function makeRunAway(btn) {
+    function runaway(btn) {
         function move() {
             const x = Math.random() * 260 - 130;
             const y = Math.random() * 200 - 100;
@@ -258,114 +236,98 @@
         btn.ontouchstart = move;
     }
 
+    const q1 = document.getElementById("q1");
+    const q2 = document.getElementById("q2");
+    const q3 = document.getElementById("q3");
+    const q4 = document.getElementById("q4");
+    const q5 = document.getElementById("q5");
+    const q6 = document.getElementById("q6");
+    const q7 = document.getElementById("q7");
+    const q8 = document.getElementById("q8");
+
+    const msg1 = document.getElementById("msg1");
+    const msg2 = document.getElementById("msg2");
+    const msg3 = document.getElementById("msg3");
+    const msg4 = document.getElementById("msg4");
+    const msg5 = document.getElementById("msg5");
+    const msg6 = document.getElementById("msg6");
+    const msg7 = document.getElementById("msg7");
+    const msg8 = document.getElementById("msg8");
+
+    const errorScreen = document.getElementById("errorScreen");
+    const loadingScreen = document.getElementById("loadingScreen");
+    const finalSweet = document.getElementById("finalSweet");
+
+    const loadingBarInner = document.getElementById("loadingBarInner");
+    const loadingText = document.getElementById("loadingText");
+
     // Q1
-    yes1.onclick = () => {
-        msg1.innerHTML = "good.";
-        msg1.style.opacity = 1;
-        setTimeout(() => go(q2), 1100);
-    };
-    makeRunAway(no1);
+    yes1.onclick = () => { msg1.innerHTML = "good."; msg1.style.opacity = 1; setTimeout(() => go(q2), 1100); };
+    runaway(no1);
 
     // Q2
-    yes2.onclick = () => {
-        msg2.innerHTML = "i knew it.";
-        msg2.style.opacity = 1;
-        setTimeout(() => go(q3), 1100);
-    };
-
-    no2.onclick = () => {
-        msg2.innerHTML = "sure.";
-        msg2.style.opacity = 1;
-        setTimeout(() => go(q3), 1100);
-    };
+    yes2.onclick = () => { msg2.innerHTML = "i knew it."; msg2.style.opacity = 1; setTimeout(() => go(q3), 1100); };
+    no2.onclick = () => { msg2.innerHTML = "sure."; msg2.style.opacity = 1; setTimeout(() => go(q3), 1100); };
 
     // Q3
-    meBtn.onclick = () => {
-        msg3.innerHTML = "correct answer.";
-        msg3.style.opacity = 1;
-        setTimeout(() => go(q4), 1100);
-    };
-
+    meBtn.onclick = () => { msg3.innerHTML = "correct answer."; msg3.style.opacity = 1; setTimeout(() => go(q4), 1100); };
     foodBtn.onclick = () => {
         msg3.innerHTML = "wow. food over me.";
         msg3.style.opacity = 1;
-        // mini prank
-        setTimeout(() => {
-            errorScreen.style.display = "flex";
-        }, 900);
-        setTimeout(() => {
-            errorScreen.style.display = "none";
-            go(q4);
-        }, 2600);
+        setTimeout(() => errorScreen.style.display = "flex", 900);
+        setTimeout(() => { errorScreen.style.display = "none"; go(q4); }, 2600);
     };
 
     // Q4
     yes4.onclick = () => {
-        // bigger prank
-        errorScreen.style.display = "flex";
-        setTimeout(() => {
-            errorScreen.style.display = "none";
-            go(q5);
-        }, 2500);
+        setTimeout(() => errorScreen.style.display = "flex", 600);
+        setTimeout(() => { errorScreen.style.display = "none"; go(q5); }, 2600);
     };
-
-    no4.onclick = () => {
-        msg4.innerHTML = "good. keep it like that.";
-        msg4.style.opacity = 1;
-        setTimeout(() => go(q5), 1100);
-    };
+    no4.onclick = () => { msg4.innerHTML = "good."; msg4.style.opacity = 1; setTimeout(() => go(q5), 1100); };
 
     // Q5
-    yes5.onclick = () => {
-        msg5.innerHTML = "good. i like your taste.";
-        msg5.style.opacity = 1;
-        setTimeout(() => go(q6), 1100);
-    };
-
+    yes5.onclick = () => { msg5.innerHTML = "good answer."; msg5.style.opacity = 1; setTimeout(() => go(q6), 1100); };
     idk5.onclick = () => {
-        msg5.innerHTML = "wrong answer.";
+        msg5.innerHTML = "wrong.";
         msg5.style.opacity = 1;
-        setTimeout(() => {
-            errorScreen.style.display = "flex";
-        }, 900);
-        setTimeout(() => {
-            errorScreen.style.display = "none";
-            go(q6);
-        }, 2600);
+        setTimeout(() => errorScreen.style.display = "flex", 900);
+        setTimeout(() => { errorScreen.style.display = "none"; go(q6); }, 2600);
     };
 
     // Q6
-    yes6.onclick = () => {
-        msg6.innerHTML = "ok last part.";
-        msg6.style.opacity = 1;
+    yes6.onclick = () => { msg6.innerHTML = "ok next."; msg6.style.opacity = 1; setTimeout(() => go(q7), 1100); };
+    no6.onclick = () => { msg6.innerHTML = "too bad."; msg6.style.opacity = 1; setTimeout(() => go(q7), 1100); };
+
+    // Q7 – rate
+    r10.onclick = () => { msg7.innerHTML = "correct."; msg7.style.opacity = 1; setTimeout(() => go(q8), 1100); };
+    r9.onclick = () => { errorScreen.style.display = "flex"; setTimeout(() => { errorScreen.style.display = "none"; go(q8); }, 2500); };
+    r8.onclick = () => { errorScreen.style.display = "flex"; setTimeout(() => { errorScreen.style.display = "none"; go(q8); }, 2500); };
+
+    // Q8 – save me or phone
+    saveMe.onclick = () => {
+        msg8.innerHTML = "good.";
+        msg8.style.opacity = 1;
         setTimeout(() => startLoading(), 1200);
     };
 
-    no6.onclick = () => {
-        msg6.innerHTML = "too late, last part anyway.";
-        msg6.style.opacity = 1;
-        setTimeout(() => startLoading(), 1200);
+    savePhone.onclick = () => {
+        msg8.innerHTML = "wow.";
+        msg8.style.opacity = 1;
+        setTimeout(() => errorScreen.style.display = "flex", 900);
+        setTimeout(() => { errorScreen.style.display = "none"; startLoading(); }, 2600);
     };
 
-    // loading screen + final
+    // loading -> sweet end
     function startLoading() {
         loadingScreen.style.display = "flex";
         let percent = 0;
         let step = 0;
-        const texts = [
-            "checking your answers...",
-            "measuring how much you miss me...",
-            "calculating if you pass...",
-            "almost done..."
-        ];
-        loadingText.innerHTML = texts[0];
-
+        const texts = ["checking your answers...", "measuring how much u miss me...", "calculating if u pass...", "almost done..."];
         const interval = setInterval(() => {
             percent += 10;
             loadingBarInner.style.width = percent + "%";
-            step = Math.min(texts.length - 1, Math.floor(percent / 30));
+            step = Math.min(texts.length - 1, Math.floor(percent / 25));
             loadingText.innerHTML = texts[step];
-
             if (percent >= 100) {
                 clearInterval(interval);
                 setTimeout(() => {
@@ -388,5 +350,4 @@
 
 </body>
 </html>
-
 
