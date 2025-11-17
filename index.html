@@ -20,72 +20,86 @@
     }
 
     h2 {
-        font-size: 30px;
+        font-size: 28px;
         font-weight: 600;
         color: #cc0055;
-        margin-bottom: 30px;
+        margin-bottom: 25px;
     }
 
     .btn {
         padding: 12px 30px;
-        font-size: 20px;
+        font-size: 18px;
         border: none;
         border-radius: 12px;
         cursor: pointer;
-        margin: 10px;
+        margin: 8px;
         transition: 0.2s;
     }
 
-    #yesBtn, #yesBtn2, #yesBtn3 {
+    .btn-main {
         background: #ff99c8;
     }
 
-    #noBtn, #noBtn2 {
+    .btn-soft {
         background: #ffccd5;
-        position: relative;
     }
 
     .msg {
-        margin-top: 25px;
-        font-size: 22px;
+        margin-top: 20px;
+        font-size: 20px;
         color: #b30047;
         opacity: 0;
-        transition: 0.5s;
+        transition: 0.4s;
     }
 
-    /* PRANK ERROR SCREEN */
-    #errorScreen {
+    /* Overlays */
+    .overlay {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        z-index: 9999;
+        text-align: center;
+    }
+
+    #errorScreen {
         background: black;
         color: white;
-        display: none;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
         font-size: 22px;
-        z-index: 9999;
     }
 
-    /* FINAL SWEET MESSAGE */
-    #finalSweet {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+    #loadingScreen {
         background: #ffe1ee;
         color: #b30047;
-        display: none;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
+        font-size: 22px;
+    }
+
+    #finalSweet {
+        background: #ffe1ee;
+        color: #b30047;
         font-size: 26px;
-        z-index: 99999;
-        text-align: center;
+        z-index: 10000;
+    }
+
+    #loadingBarOuter {
+        width: 70%;
+        height: 18px;
+        border-radius: 9px;
+        background: #ffd6e8;
+        margin-top: 15px;
+        overflow: hidden;
+    }
+
+    #loadingBarInner {
+        width: 0%;
+        height: 100%;
+        background: #ff4d94;
+        transition: width 0.25s;
     }
 
     /* Falling petals */
@@ -114,120 +128,253 @@
     <!-- Q1 -->
     <div id="q1">
         <h2>do u miss me?</h2>
-        <button id="yesBtn" class="btn">yes</button>
-        <button id="noBtn" class="btn">no</button>
+        <button id="yes1" class="btn btn-main">yes</button>
+        <button id="no1" class="btn btn-soft">no</button>
         <div id="msg1" class="msg"></div>
     </div>
 
     <!-- Q2 -->
     <div id="q2" style="display:none;">
         <h2>do u stalk my profile?</h2>
-        <button id="yesBtn2" class="btn">yes</button>
-        <button id="noBtn2" class="btn">no</button>
+        <button id="yes2" class="btn btn-main">yes</button>
+        <button id="no2" class="btn btn-soft">no</button>
         <div id="msg2" class="msg"></div>
     </div>
 
     <!-- Q3 -->
     <div id="q3" style="display:none;">
-        <h2>be honest. do u think im gay?</h2>
-        <button id="yesBtn3" class="btn">yes</button>
-        <button id="fakeBtn" class="btn" style="background:#ffccd5;">idk</button>
+        <h2>who would u choose?</h2>
+        <button id="meBtn" class="btn btn-main">you</button>
+        <button id="foodBtn" class="btn btn-soft">food</button>
         <div id="msg3" class="msg"></div>
+    </div>
+
+    <!-- Q4 -->
+    <div id="q4" style="display:none;">
+        <h2>do u talk to someone more than me?</h2>
+        <button id="yes4" class="btn btn-soft">yes</button>
+        <button id="no4" class="btn btn-main">no</button>
+        <div id="msg4" class="msg"></div>
+    </div>
+
+    <!-- Q5 -->
+    <div id="q5" style="display:none;">
+        <h2>do u think im gay?</h2>
+        <button id="yes5" class="btn btn-main">yes</button>
+        <button id="idk5" class="btn btn-soft">idk</button>
+        <div id="msg5" class="msg"></div>
+    </div>
+
+    <!-- Q6 -->
+    <div id="q6" style="display:none;">
+        <h2>are u tired of these questions?</h2>
+        <button id="yes6" class="btn btn-soft">yes</button>
+        <button id="no6" class="btn btn-main">no</button>
+        <div id="msg6" class="msg"></div>
     </div>
 
 </div>
 
-<!-- PRANK ERROR SCREEN -->
-<div id="errorScreen">
+<!-- Fake error screen -->
+<div id="errorScreen" class="overlay">
     <p>system error.</p>
-    <p>reason: u failed the loyalty test.</p>
+    <p>reason: your answers are suspicious.</p>
 </div>
 
-<!-- FINAL SWEET MESSAGE -->
-<div id="finalSweet">
-    <p>relax. im joking.</p>
+<!-- Fake loading screen -->
+<div id="loadingScreen" class="overlay">
+    <p>processing your results...</p>
+    <div id="loadingBarOuter">
+        <div id="loadingBarInner"></div>
+    </div>
+    <p id="loadingText" style="margin-top:10px; font-size:18px;"></p>
+</div>
+
+<!-- Final sweet message -->
+<div id="finalSweet" class="overlay">
+    <p>relax. this was all a joke.</p>
     <p>GO STUDY NIGGA</p>
 </div>
 
 <script>
-    const yes1 = document.getElementById("yesBtn");
-    const no1 = document.getElementById("noBtn");
-    const msg1 = document.getElementById("msg1");
-
-    const yes2 = document.getElementById("yesBtn2");
-    const no2 = document.getElementById("noBtn2");
-    const msg2 = document.getElementById("msg2");
-
-    const yes3 = document.getElementById("yesBtn3");
-    const fakeBtn = document.getElementById("fakeBtn");
-    const msg3 = document.getElementById("msg3");
-
+    // elements
     const q1 = document.getElementById("q1");
     const q2 = document.getElementById("q2");
     const q3 = document.getElementById("q3");
+    const q4 = document.getElementById("q4");
+    const q5 = document.getElementById("q5");
+    const q6 = document.getElementById("q6");
+
+    const yes1 = document.getElementById("yes1");
+    const no1 = document.getElementById("no1");
+    const msg1 = document.getElementById("msg1");
+
+    const yes2 = document.getElementById("yes2");
+    const no2 = document.getElementById("no2");
+    const msg2 = document.getElementById("msg2");
+
+    const meBtn = document.getElementById("meBtn");
+    const foodBtn = document.getElementById("foodBtn");
+    const msg3 = document.getElementById("msg3");
+
+    const yes4 = document.getElementById("yes4");
+    const no4 = document.getElementById("no4");
+    const msg4 = document.getElementById("msg4");
+
+    const yes5 = document.getElementById("yes5");
+    const idk5 = document.getElementById("idk5");
+    const msg5 = document.getElementById("msg5");
+
+    const yes6 = document.getElementById("yes6");
+    const no6 = document.getElementById("no6");
+    const msg6 = document.getElementById("msg6");
 
     const errorScreen = document.getElementById("errorScreen");
+    const loadingScreen = document.getElementById("loadingScreen");
     const finalSweet = document.getElementById("finalSweet");
 
-    /* QUESTION 1 */
-    yes1.onclick = () => {
-        msg1.innerHTML = "i knew it.";
-        msg1.style.opacity = 1;
-        setTimeout(() => {
-            q1.style.display = "none";
-            q2.style.display = "block";
-        }, 1200);
-    };
+    const loadingBarInner = document.getElementById("loadingBarInner");
+    const loadingText = document.getElementById("loadingText");
 
-    function moveBtn1() {
-        const x = Math.random() * 260 - 130;
-        const y = Math.random() * 200 - 100;
-        no1.style.transform = `translate(${x}px, ${y}px)`;
+    // helper to move yes/no between questions
+    function go(next) {
+        q1.style.display = "none";
+        q2.style.display = "none";
+        q3.style.display = "none";
+        q4.style.display = "none";
+        q5.style.display = "none";
+        q6.style.display = "none";
+        next.style.display = "block";
     }
 
-    no1.onmouseover = moveBtn1;
-    no1.ontouchstart = moveBtn1;
+    // runaway button for mouse and touch
+    function makeRunAway(btn) {
+        function move() {
+            const x = Math.random() * 260 - 130;
+            const y = Math.random() * 200 - 100;
+            btn.style.transform = `translate(${x}px, ${y}px)`;
+        }
+        btn.onmouseover = move;
+        btn.ontouchstart = move;
+    }
 
-    /* QUESTION 2 */
+    // Q1
+    yes1.onclick = () => {
+        msg1.innerHTML = "good.";
+        msg1.style.opacity = 1;
+        setTimeout(() => go(q2), 1100);
+    };
+    makeRunAway(no1);
+
+    // Q2
     yes2.onclick = () => {
         msg2.innerHTML = "i knew it.";
         msg2.style.opacity = 1;
-        setTimeout(() => {
-            q2.style.display = "none";
-            q3.style.display = "block";
-        }, 1200);
+        setTimeout(() => go(q3), 1100);
     };
 
     no2.onclick = () => {
-        // PRANK ERROR
+        msg2.innerHTML = "sure.";
+        msg2.style.opacity = 1;
+        setTimeout(() => go(q3), 1100);
+    };
+
+    // Q3
+    meBtn.onclick = () => {
+        msg3.innerHTML = "correct answer.";
+        msg3.style.opacity = 1;
+        setTimeout(() => go(q4), 1100);
+    };
+
+    foodBtn.onclick = () => {
+        msg3.innerHTML = "wow. food over me.";
+        msg3.style.opacity = 1;
+        // mini prank
+        setTimeout(() => {
+            errorScreen.style.display = "flex";
+        }, 900);
+        setTimeout(() => {
+            errorScreen.style.display = "none";
+            go(q4);
+        }, 2600);
+    };
+
+    // Q4
+    yes4.onclick = () => {
+        // bigger prank
         errorScreen.style.display = "flex";
         setTimeout(() => {
             errorScreen.style.display = "none";
-            finalSweet.style.display = "flex";
-        }, 2000);
+            go(q5);
+        }, 2500);
     };
 
-    /* QUESTION 3 */
-    yes3.onclick = () => {
-        msg3.innerHTML = "good answer.";
-        msg3.style.opacity = 1;
-        setTimeout(() => {
-            finalSweet.style.display = "flex";
-        }, 1300);
+    no4.onclick = () => {
+        msg4.innerHTML = "good. keep it like that.";
+        msg4.style.opacity = 1;
+        setTimeout(() => go(q5), 1100);
     };
 
-    fakeBtn.onclick = () => {
-        msg3.innerHTML = "wrong answer.";
-        msg3.style.opacity = 1;
+    // Q5
+    yes5.onclick = () => {
+        msg5.innerHTML = "good. i like your taste.";
+        msg5.style.opacity = 1;
+        setTimeout(() => go(q6), 1100);
+    };
+
+    idk5.onclick = () => {
+        msg5.innerHTML = "wrong answer.";
+        msg5.style.opacity = 1;
         setTimeout(() => {
             errorScreen.style.display = "flex";
-        }, 1500);
-
+        }, 900);
         setTimeout(() => {
             errorScreen.style.display = "none";
-            finalSweet.style.display = "flex";
-        }, 3500);
+            go(q6);
+        }, 2600);
     };
+
+    // Q6
+    yes6.onclick = () => {
+        msg6.innerHTML = "ok last part.";
+        msg6.style.opacity = 1;
+        setTimeout(() => startLoading(), 1200);
+    };
+
+    no6.onclick = () => {
+        msg6.innerHTML = "too late, last part anyway.";
+        msg6.style.opacity = 1;
+        setTimeout(() => startLoading(), 1200);
+    };
+
+    // loading screen + final
+    function startLoading() {
+        loadingScreen.style.display = "flex";
+        let percent = 0;
+        let step = 0;
+        const texts = [
+            "checking your answers...",
+            "measuring how much you miss me...",
+            "calculating if you pass...",
+            "almost done..."
+        ];
+        loadingText.innerHTML = texts[0];
+
+        const interval = setInterval(() => {
+            percent += 10;
+            loadingBarInner.style.width = percent + "%";
+            step = Math.min(texts.length - 1, Math.floor(percent / 30));
+            loadingText.innerHTML = texts[step];
+
+            if (percent >= 100) {
+                clearInterval(interval);
+                setTimeout(() => {
+                    loadingScreen.style.display = "none";
+                    finalSweet.style.display = "flex";
+                }, 600);
+            }
+        }, 300);
+    }
 
     // petals
     for (let i = 0; i < 35; i++) {
